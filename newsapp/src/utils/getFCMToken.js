@@ -19,7 +19,7 @@ export const getFCMToken = async () => {
 
   console.log("FCM Token:", token);
 
-  await fetch("http://localhost:3001/api/v1/auth/save-token", {
+  await fetch("https://news-backend-17sl.onrender.com/api/v1/auth/save-token", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

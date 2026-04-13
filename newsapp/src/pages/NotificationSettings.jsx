@@ -31,7 +31,7 @@ const NotificationSettings = () => {
     const fetchPreferences = async () => {
       try {
         const res = await fetch(
-          "http://localhost:3001/api/v1/notifications/preferences",
+          "https://news-backend-17sl.onrender.com/api/v1/notifications/preferences",
           {
             method: "GET",
             credentials: "include",
@@ -80,7 +80,7 @@ const NotificationSettings = () => {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:3001/api/v1/notifications/preferences",
+        "https://news-backend-17sl.onrender.com/api/v1/notifications/preferences",
         {
           method: "PUT",
           credentials: "include",
