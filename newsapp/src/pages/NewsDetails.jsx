@@ -38,7 +38,7 @@ const NewsDetails = () => {
    <img
     src={
         news.image
-            ? `http://localhost:3001/${news.image.replace(/\\/g, "/")}?t=${new Date().getTime()}`
+            ? `https://ancapp.netlify.app/${news.image.replace(/\\/g, "/")}?t=${new Date().getTime()}`
             : "https://via.placeholder.com/600x300"
     }
     alt={news.title}
