@@ -4,8 +4,7 @@ import { toast } from "react-toastify";
 import { clearUser, setUser } from "../redux/authSlice";
 import { logoutUser } from "../services/authServices";
 import { useRef, useState } from "react";
-
-
+import logo from "../assets/anc.jpeg";
 const Navbar = () => {
     const { isAuthenticated, user } = useSelector(state => state.auth);
     const fileInputRef = useRef(null);
@@ -64,21 +63,22 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
                 <div className="flex justify-between h-16 items-center">
 
-                    
                     <Link
                         to="/"
                         onClick={() => setMenuOpen(false)}
                         className="flex items-center space-x-2"
                     >
-                        <div className="w-10 h-10 bg-purple-950 rounded-lg flex items-center justify-center shadow-md">
-                            <span className="text-white font-bold text-lg">ANC</span>
-                        </div>
+                      <img
+    src={logo}
+    alt="Logo"
+    className="w-10 h-10 object-contain"
+/>
                         <span className="text-xl font-bold text-purple-950 hidden sm:block">
                             Aura News Center
                         </span>
                     </Link>
 
-                    
+                 
                     <div className="hidden sm:flex items-center space-x-6">
 
                         <Link to="/" className="hover:underline text-purple-950 font-medium">
@@ -99,79 +99,73 @@ const Navbar = () => {
                                 </Link>
                             </>
                         ) : (
-                           <div className="relative group flex items-center space-x-4">
+                            <div className="relative group flex items-center space-x-4">
 
-   
-    <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-purple-50 cursor-pointer">
+                                <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-purple-50 cursor-pointer">
 
-        
-        <span className="w-8 h-8 bg-purple-950 text-white rounded-full flex items-center justify-center overflow-hidden">
-            {user?.profilePicture ? (
-                <img
-                    src={`https://news-backend-17sl.onrender.com${user.profilePicture}`}
-                    alt="profile"
-                    className="w-full h-full object-cover"
-                />
-            ) : (
-                user?.name?.charAt(0).toUpperCase() || "U"
-            )}
-        </span>
+                                    <span className="w-8 h-8 bg-purple-950 text-white rounded-full flex items-center justify-center overflow-hidden">
+                                        {user?.profilePicture ? (
+                                            <img
+                                                src={`https://news-backend-17sl.onrender.com${user.profilePicture}`}
+                                                alt="profile"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        ) : (
+                                            user?.name?.charAt(0).toUpperCase() || "U"
+                                        )}
+                                    </span>
 
-   
-        <div className="flex flex-col leading-tight">
-            <span className="font-medium text-purple-950">
-                {user?.name || "User"}
-            </span>
-            <span className="text-xs text-purple-950">
-                {user?.role}
-            </span>
-        </div>
+                                    <div className="flex flex-col leading-tight">
+                                        <span className="font-medium text-purple-950">
+                                            {user?.name || "User"}
+                                        </span>
+                                        <span className="text-xs text-purple-950">
+                                            {user?.role}
+                                        </span>
+                                    </div>
+                                </div>
 
-    </div>
+                                <div className="absolute right-0 top-12 w-48 bg-white border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition z-1000">
 
-    
-    <div className="absolute right-0 top-12 w-48 bg-white border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition z-1000">
+                                    <Link
+                                        to={
+                                            user?.role === "admin"
+                                                ? "/admin/dashboard"
+                                                : user?.role === "journalist"
+                                                    ? "/journalist/dashboard"
+                                                    : "/dashboard"
+                                        }
+                                        className="block px-4 py-2 hover:bg-purple-100"
+                                    >
+                                        Dashboard
+                                    </Link>
 
-        <Link
-            to={
-                user?.role === "admin"
-                    ? "/admin/dashboard"
-                    : user?.role === "journalist"
-                        ? "/journalist/dashboard"
-                        : "/dashboard"
-            }
-            className="block px-4 py-2 hover:bg-purple-100"
-        >
-            Dashboard
-        </Link>
+                                    <button
+                                        onClick={() => fileInputRef.current.click()}
+                                        className="w-full text-left px-4 py-2 hover:bg-purple-100"
+                                    >
+                                        Update Profile Picture
+                                    </button>
 
-        <button
-            onClick={() => fileInputRef.current.click()}
-            className="w-full text-left px-4 py-2 hover:bg-purple-100"
-        >
-            Update Profile Picture
-        </button>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full text-left px-4 py-2 hover:bg-purple-100"
+                                    >
+                                        Logout
+                                    </button>
 
-        <button
-            onClick={handleLogout}
-            className="w-full text-left px-4 py-2 hover:bg-purple-100"
-        >
-            Logout
-        </button>
-
-        <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            onChange={handleUpload}
-            className="hidden"
-        />
-    </div>
-</div>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        onChange={handleUpload}
+                                        className="hidden"
+                                    />
+                                </div>
+                            </div>
                         )}
                     </div>
 
-                    
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="sm:hidden text-purple-950 text-2xl"
@@ -181,9 +175,34 @@ const Navbar = () => {
                 </div>
             </div>
 
-          
             {menuOpen && (
                 <div className="sm:hidden bg-yellow-500 px-4 pb-4 space-y-3 shadow-md">
+
+                    {isAuthenticated && (
+                        <div className="flex items-center space-x-3 px-3 py-2 bg-white rounded-lg mb-3">
+
+                            <span className="w-10 h-10 bg-purple-950 text-white rounded-full flex items-center justify-center overflow-hidden">
+                                {user?.profilePicture ? (
+                                    <img
+                                        src={`https://news-backend-17sl.onrender.com${user.profilePicture}`}
+                                        alt="profile"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    user?.name?.charAt(0).toUpperCase() || "U"
+                                )}
+                            </span>
+
+                            <div className="flex flex-col">
+                                <span className="font-medium text-purple-950">
+                                    {user?.name}
+                                </span>
+                                <span className="text-xs text-purple-950">
+                                    {user?.role}
+                                </span>
+                            </div>
+                        </div>
+                    )}
 
                     <Link
                         to="/"

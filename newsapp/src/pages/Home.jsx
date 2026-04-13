@@ -5,6 +5,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import news1 from "../assets/news4.jpg";
 import news2 from "../assets/news5.jpg";
 import news3 from "../assets/news3.jpg";
+import anc1 from "../assets/anc1.jpeg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -24,11 +25,11 @@ const Home = () => {
   className="h-[92vh]"
 >
 
- 
+
   <SwiperSlide>
     <div
       className="h-full bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url(${news3})`, }}
+      style={{ backgroundImage: `url(${anc1})`, }}
     >
       <div className="bg-black/60 p-8 rounded-xl text-center">
         <h1 className="text-5xl font-extrabold text-white">
@@ -45,11 +46,28 @@ const Home = () => {
   <SwiperSlide>
     <div
       className="h-full bg-cover bg-center flex items-center justify-center"
+      style={{ backgroundImage: `url(${news3})`, }}
+    >
+      <div className="bg-black/60 p-8 rounded-xl text-center">
+        <h1 className="text-5xl font-extrabold text-white">
+          Get <span className="text-yellow-400">Updates</span>
+        </h1>
+        <p className="mt-4 text-purple-200">
+          .Get your Latest news and be updated.
+        </p>
+      </div>
+    </div>
+  </SwiperSlide>
+
+ 
+  <SwiperSlide>
+    <div
+      className="h-full bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${news2})` }}
     >
       <div className="bg-black/60 p-8 rounded-xl text-center">
         <h1 className="text-5xl font-bold text-white">
-          ⚡ Breaking News Instantly
+         Breaking News Instantly
         </h1>
         <p className="mt-4 text-purple-200">
           Stay ahead with real-time updates.
@@ -66,7 +84,7 @@ const Home = () => {
     >
       <div className="bg-black/60 p-8 rounded-xl text-center">
         <h1 className="text-5xl font-bold text-white">
-          🧠 Smart Personalized Feed
+        Smart Personalized Feed
         </h1>
         <p className="mt-4 text-purple-200">
           News tailored for you.

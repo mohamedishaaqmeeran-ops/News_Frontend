@@ -1,6 +1,7 @@
 import { Navigate, useLoaderData } from "react-router";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
+import Footer from "./Footer";
 import { toast } from "react-toastify";
 import {
     createChannel,
@@ -395,6 +396,7 @@ const AdminDashboard = () => {
                     </div>
                 )}
             </div>
+            <Footer/>
         </div>
     );
 };
