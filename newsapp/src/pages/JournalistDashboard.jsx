@@ -293,7 +293,7 @@ const JournalistDashboard = () => {
                             src={
                                 n.channel.logo.startsWith("http")
                                     ? n.channel.logo
-                                    : `http://localhost:3001/${n.channel.logo.replace(/\\/g, "/")}`
+                                    : `https://news-backend-17sl.onrender.com/${n.channel.logo.replace(/\\/g, "/")}`
                             }
                             alt="logo"
                             className="w-8 h-8 rounded-full object-cover"
