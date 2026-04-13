@@ -323,7 +323,7 @@ const JournalistDashboard = () => {
             <div className="flex gap-2 flex-wrap">
                 <button
                     onClick={() => navigate(`/news/${n._id}`)}
-                    className="bg-green-500 text-white px-3 py-1 rounded"
+                    className="bg-green-500 text-white px-3 py-1 rounded cursor-pointer"
                 >
                     View News
                 </button>
