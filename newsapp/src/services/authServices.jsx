@@ -7,7 +7,7 @@ export const registerUser = async (userData) => {
 }
 
 export const loginUser = async (credentials) => {
-    const response = await instance.post('/auth/login', credentials);
+    const response = await protectedInstance.post('/auth/login', credentials);
     return response.data;
 };
 
