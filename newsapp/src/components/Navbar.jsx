@@ -36,7 +36,7 @@ const Navbar = () => {
 
         try {
             const response = await fetch(
-                "https://ancapp.netlify.app/api/v1/auth/upload/profile-picture",
+                "https://news-backend-17sl.onrender.com/api/v1/auth/upload/profile-picture",
                 {
                     method: "POST",
                     credentials: "include",
@@ -108,7 +108,7 @@ const Navbar = () => {
         <span className="w-8 h-8 bg-purple-950 text-white rounded-full flex items-center justify-center overflow-hidden">
             {user?.profilePicture ? (
                 <img
-                    src={`https://ancapp.netlify.app${user.profilePicture}`}
+                    src={`https://news-backend-17sl.onrender.com${user.profilePicture}`}
                     alt="profile"
                     className="w-full h-full object-cover"
                 />
