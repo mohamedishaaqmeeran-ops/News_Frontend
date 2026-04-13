@@ -380,7 +380,7 @@ const AdminDashboard = () => {
 
                             {viewChannel.logo && (
                                 <img
-                                    src={`http://localhost:3001/${viewChannel.logo}`}
+                                    src={`https://news-backend-17sl.onrender.com/${viewChannel.logo}`}
                                     className="w-20 h-20 mt-2"
                                 />
                             )}

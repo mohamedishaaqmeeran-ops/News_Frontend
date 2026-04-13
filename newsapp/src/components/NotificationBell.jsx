@@ -5,7 +5,7 @@ const NotificationBell = () => {
   const [open, setOpen] = useState(false);
 
   const fetchNotifications = async () => {
-    const res = await fetch("http://localhost:3001/api/v1/notifications", {
+    const res = await fetch("https://news-backend-17sl.onrender.com/api/v1/notifications", {
       credentials: "include",
     });
 
@@ -20,7 +20,7 @@ const NotificationBell = () => {
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
   const markAsRead = async (id) => {
-    await fetch(`http://localhost:3001/api/v1/notifications/${id}/read`, {
+    await fetch(`https://news-backend-17sl.onrender.com/api/v1/notifications/${id}/read`, {
       method: "PUT",
       credentials: "include",
     });

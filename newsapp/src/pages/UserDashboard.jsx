@@ -283,7 +283,7 @@ const UserDashboard = () => {
                   <div className="flex items-center gap-2">
                     {n.channel?.logo && (
                       <img
-                        src={`http://localhost:3001/${n.channel.logo}`}
+                        src={`https://news-backend-17sl.onrender.com/${n.channel.logo}`}
                         className="w-8 h-8 rounded-full"
                       />
                     )}
