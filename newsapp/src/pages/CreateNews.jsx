@@ -166,7 +166,7 @@ const CreateNews = () => {
                     className="mb-4"
                 />
 
-                <button className="w-full bg-green-600 text-white py-2 rounded">
+                <button className="w-full bg-green-600 text-white py-2 rounded cursor-pointer">
                     Create News
                 </button>
             </form>

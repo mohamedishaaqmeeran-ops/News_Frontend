@@ -34,7 +34,7 @@ const NotificationBell = () => {
 
   return (
     <div className="relative">
-      <button onClick={() => setOpen(!open)}>
+      <button className="cursor-pointer" onClick={() => setOpen(!open)}>
         🔔 {unreadCount > 0 && <span className="text-white">{unreadCount}</span>}
       </button>
 

@@ -176,7 +176,7 @@ const AdminDashboard = () => {
                 <div className="flex space-x-6 mb-6 border-b border-gray-700">
                     <button
                         onClick={() => setActiveTab('channels')}
-                        className={`pb-2 px-2 text-white ${
+                        className={`pb-2 px-2 text-white cursor-pointer ${
                             activeTab === 'channels'
                                 ? 'border-b-2 border-yellow-500 text-yellow-400'
                                 : ''
@@ -187,7 +187,7 @@ const AdminDashboard = () => {
 
                     <button
                         onClick={() => setActiveTab('journalists')}
-                        className={`pb-2 px-2 text-white ${
+                        className={`pb-2 px-2 text-white cursor-pointer ${
                             activeTab === 'journalists'
                                 ? 'border-b-2 border-yellow-500 text-yellow-400'
                                 : ''
@@ -202,7 +202,7 @@ const AdminDashboard = () => {
                     <div>
                         <button
                             onClick={() => setShowChannelForm(!showChannelForm)}
-                            className="mb-4 bg-yellow-500 px-4 py-2 text-white rounded"
+                            className="mb-4 bg-yellow-500 px-4 py-2 text-white rounded cursor-pointer"
                         >
                             {showChannelForm ? "Cancel" : "Add Channel"}
                         </button>
@@ -225,7 +225,7 @@ const AdminDashboard = () => {
                                     onChange={e => setChannelData({ ...channelData, logo: e.target.files[0] })}
                                 />
 
-                                <button className="bg-green-600 px-4 py-2 text-white rounded">
+                                <button className="bg-green-600 px-4 py-2 text-white rounded cursor-pointer">
                                     {editingChannel ? "Update" : "Create"}
                                 </button>
                             </form>
@@ -237,7 +237,7 @@ const AdminDashboard = () => {
 
                                 <div className="flex gap-2 mt-2">
                                     <button onClick={() => setViewChannel(ch)}
-                                        className="bg-blue-500 px-3 py-1 text-white rounded">View</button>
+                                        className="bg-blue-500 px-3 py-1 text-white rounded cursor-pointer">View</button>
 
                                     <button onClick={() => {
                                         setEditingChannel(ch);
@@ -249,10 +249,10 @@ const AdminDashboard = () => {
                                         });
                                         setShowChannelForm(true);
                                     }}
-                                        className="bg-yellow-500 px-3 py-1 text-white rounded">Edit</button>
+                                        className="bg-yellow-500 px-3 py-1 text-white rounded cursor-pointer">Edit</button>
 
                                     <button onClick={() => handleDeleteChannel(ch._id)}
-                                        className="bg-red-500 px-3 py-1 text-white rounded">Delete</button>
+                                        className="bg-red-500 px-3 py-1 text-white rounded cursor-pointer">Delete</button>
                                 </div>
                             </div>
                         ))}
@@ -263,7 +263,7 @@ const AdminDashboard = () => {
                 {activeTab === 'journalists' && (
                     <div>
                         <button onClick={() => setShowJournalistForm(!showJournalistForm)}
-                            className="mb-4 bg-yellow-500 px-4 py-2 text-white rounded">
+                            className="mb-4 bg-yellow-500 px-4 py-2 text-white rounded cursor-pointer">
                             {showJournalistForm ? "Cancel" : "Add Journalist"}
                         </button>
 
@@ -291,7 +291,7 @@ const AdminDashboard = () => {
                                     ))}
                                 </select>
 
-                                <button className="bg-green-600 px-4 py-2 text-white rounded">
+                                <button className="bg-green-600 px-4 py-2 text-white rounded cursor-pointer">
                                     Create
                                 </button>
                             </form>
@@ -347,14 +347,14 @@ const AdminDashboard = () => {
                                     });
                                     setShowEditJournalistForm(true);
                                 }}
-                                className="bg-yellow-500 px-2 py-1 text-xs md:text-sm text-white rounded"
+                                className="bg-yellow-500 px-2 py-1 text-xs md:text-sm text-white rounded cursor-pointer"
                             >
                                 Edit
                             </button>
 
                             <button
                                 onClick={() => handleDeleteJournalist(j._id)}
-                                className="bg-red-500 px-2 py-1 text-xs md:text-sm text-white rounded"
+                                className="bg-red-500 px-2 py-1 text-xs md:text-sm text-white rounded cursor-pointer"
                             >
                                 Delete
                             </button>
@@ -388,7 +388,7 @@ const AdminDashboard = () => {
 
                             <button
                                 onClick={() => setViewChannel(null)}
-                                className="mt-4 bg-red-500 text-white px-4 py-2 rounded w-full"
+                                className="mt-4 bg-red-500 text-white px-4 py-2 rounded w-full cursor-pointer"
                             >
                                 Close
                             </button>

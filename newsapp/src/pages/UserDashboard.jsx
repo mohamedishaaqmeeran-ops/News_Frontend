@@ -226,14 +226,14 @@ const UserDashboard = () => {
             }
           />
 
-          <button className="bg-purple-950 text-white rounded px-4 py-1">
+          <button className="bg-purple-950 text-white rounded px-4 py-1 cursor-pointer">
             Search
           </button>
 
           <button
             type="button"
             onClick={handleReset}
-            className="bg-red-500 text-white rounded px-4 py-1"
+            className="bg-red-500 text-white rounded px-4 py-1 cursor-pointer"
           >
             Reset
           </button>
@@ -255,7 +255,7 @@ const UserDashboard = () => {
             <button
               key={channel._id}
               onClick={() => handleChannelClick(channel._id)}
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 rounded cursor-pointer ${
                 activeChannel === channel._id
                   ? "bg-yellow-500 text-white"
                   : "bg-yellow-500 text-white hover:bg-green-500"
@@ -297,7 +297,7 @@ const UserDashboard = () => {
 
                 <button
                   onClick={() => navigate(`/news/${n._id}`)}
-                  className="bg-purple-950 text-white px-3 py-1 rounded"
+                  className="bg-purple-950 text-white px-3 py-1 rounded cursor-pointer"
                 >
                   View
                 </button>
@@ -315,7 +315,7 @@ const UserDashboard = () => {
               setPage(newPage);
               fetchNews(filters, newPage);
             }}
-            className="bg-gray-500 text-white px-4 py-1 rounded disabled:opacity-50"
+            className="bg-gray-500 text-white px-4 py-1 rounded disabled:opacity-50 cursor-pointer"
           >
             Prev
           </button>
@@ -328,7 +328,7 @@ const UserDashboard = () => {
               setPage(newPage);
               fetchNews(filters, newPage);
             }}
-            className="bg-purple-700 text-white px-4 py-1 rounded"
+            className="bg-purple-700 text-white px-4 py-1 rounded cursor-pointer"
           >
             Next
           </button>

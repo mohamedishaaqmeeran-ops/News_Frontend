@@ -174,7 +174,7 @@ const JournalistDashboard = () => {
                 <div className="flex justify-end mb-4">
                     <button
                         onClick={() => navigate('/journalist/createnews')}
-                        className="bg-green-500 text-white px-4 py-2 rounded"
+                        className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer"
                     >
                         + Post News
                     </button>
@@ -228,7 +228,7 @@ const JournalistDashboard = () => {
                   
                     <button
                         onClick={handleSearch}
-                        className="bg-purple-950 text-white px-3 py-2 rounded"
+                        className="bg-purple-950 text-white px-3 py-2 rounded cursor-pointer"
                     >
                         Search
                     </button>
@@ -236,7 +236,7 @@ const JournalistDashboard = () => {
                    
                     <button
                         onClick={resetFilters}
-                        className="bg-red-600 text-white px-3 py-2 rounded"
+                        className="bg-red-600 text-white px-3 py-2 rounded cursor-pointer"
                     >
                         Reset
                     </button>
@@ -250,7 +250,7 @@ const JournalistDashboard = () => {
                             setActiveChannel(null);
                             fetchNews();
                         }}
-                        className="bg-green-500 text-white px-3 py-1 rounded"
+                        className="bg-green-500 text-white px-3 py-1 rounded cursor-pointer"
                     >
                         All Channels
                     </button>
@@ -259,7 +259,7 @@ const JournalistDashboard = () => {
                         <button
                             key={channel._id}
                             onClick={() => handleChannelClick(channel._id)}
-                            className={`px-3 py-1 rounded ${
+                            className={`px-3 py-1 rounded cursor-pointer ${
                                 activeChannel === channel._id
                                     ? "bg-yellow-500 text-white"
                                     : "bg-yellow-500 text-white hover:bg-green-500"
@@ -330,14 +330,14 @@ const JournalistDashboard = () => {
 
                 <button
                     onClick={() => navigate(`/journalist/editnews/${n._id}`)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded"
+                    className="bg-yellow-500 text-white px-3 py-1 rounded cursor-pointer"
                 >
                     Edit
                 </button>
 
                 <button
                     onClick={() => handleDelete(n._id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded"
+                    className="bg-red-600 text-white px-3 py-1 rounded cursor-pointer"
                 >
                     Delete
                 </button>

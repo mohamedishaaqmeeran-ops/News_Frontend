@@ -101,18 +101,14 @@ const Login = () => {
 
                         <button
                             type="submit"
-                            className="w-full py-2 px-4 rounded-md text-white bg-purple-950 hover:bg-purple-800 transition"
+                            className="w-full py-2 px-4 rounded-md text-white bg-purple-950 hover:bg-purple-800 transition cursor-pointer"
                         >
                             Sign in
                         </button>
 
                     </form>
 
-                    <div className="mt-6 text-center">
-                        <Link to="/" className="text-sm italic font-bold text-green-700 underline">
-                            Back to Home
-                        </Link>
-                    </div>
+                   
                 </div>
 
              

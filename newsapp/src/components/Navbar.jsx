@@ -71,7 +71,7 @@ const Navbar = () => {
                       <img
     src={logo}
     alt="Logo"
-    className="w-10 h-10 object-contain"
+    className="w-10 h-10 object-contain cursor-pointer rounded-lg shadow-md"
 />
                         <span className="text-xl font-bold text-purple-950 hidden sm:block">
                             Aura News Center
@@ -135,21 +135,21 @@ const Navbar = () => {
                                                     ? "/journalist/dashboard"
                                                     : "/dashboard"
                                         }
-                                        className="block px-4 py-2 hover:bg-purple-100"
+                                        className="block px-4 py-2 hover:bg-purple-100 cursor-pointer"
                                     >
                                         Dashboard
                                     </Link>
 
                                     <button
                                         onClick={() => fileInputRef.current.click()}
-                                        className="w-full text-left px-4 py-2 hover:bg-purple-100"
+                                        className="w-full text-left px-4 py-2 hover:bg-purple-100 cursor-pointer"
                                     >
                                         Update Profile Picture
                                     </button>
 
                                     <button
                                         onClick={handleLogout}
-                                        className="w-full text-left px-4 py-2 hover:bg-purple-100"
+                                        className="w-full text-left px-4 py-2 hover:bg-purple-100 cursor-pointer"
                                     >
                                         Logout
                                     </button>
