@@ -108,7 +108,7 @@ const initialized = useRef(false);
         const messaging = await getMessagingInstance();
         if (!messaging) return;
 
-      
+        await getFCMToken(messaging);
         listenForMessages(messaging);
 
       } catch (err) {

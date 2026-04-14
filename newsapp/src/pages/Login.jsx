@@ -16,46 +16,26 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-   const handleLogin = async (e) => {
-    e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-    try {
-        const response = await loginUser(formData);
-
-        dispatch(setUser(response.user));
-        toast.success(response.message);
-
-        
-        setTimeout(async () => {
-            try {
-                const messaging = await getMessagingInstance();
-
-                if (messaging) {
-                    await getFCMToken(messaging); 
-                }
-            } catch (err) {
-                console.log("FCM error:", err.message);
+        try {
+            const response = await loginUser(formData);
+            dispatch(setUser(response.user));
+            toast.success(response.message);
+           await getFCMToken();
+            if (response.user.role === 'admin') {
+                navigate('/admin/dashboard');
+            } else if (response.user.role === 'journalist') {
+                navigate('/journalist/dashboard');
+            } else {
+                navigate('/dashboard');
             }
-        }, 500);
-
-        // ✅ navigation
-        if (response.user.role === 'admin') {
-            navigate('/admin/dashboard');
-        } else if (response.user.role === 'journalist') {
-            navigate('/journalist/dashboard');
-        } else {
-            navigate('/dashboard');
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || error.message || "Login failed";
+            toast.error(errorMessage);
         }
-
-    } catch (error) {
-        const errorMessage =
-            error.response?.data?.message ||
-            error.message ||
-            "Login failed";
-
-        toast.error(errorMessage);
     }
-};
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-yellow-500 p-4">
