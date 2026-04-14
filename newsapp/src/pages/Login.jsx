@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from '../redux/authSlice';
 import login from "../assets/login.png";
 import { getFCMToken } from "../utils/getFCMToken";
+import { getMessagingInstance } from "../firebase";
 const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -15,26 +16,46 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+   const handleLogin = async (e) => {
+    e.preventDefault();
 
-        try {
-            const response = await loginUser(formData);
-            dispatch(setUser(response.user));
-            toast.success(response.message);
-           await getFCMToken();
-            if (response.user.role === 'admin') {
-                navigate('/admin/dashboard');
-            } else if (response.user.role === 'journalist') {
-                navigate('/journalist/dashboard');
-            } else {
-                navigate('/dashboard');
+    try {
+        const response = await loginUser(formData);
+
+        dispatch(setUser(response.user));
+        toast.success(response.message);
+
+        
+        setTimeout(async () => {
+            try {
+                const messaging = await getMessagingInstance();
+
+                if (messaging) {
+                    await getFCMToken(messaging); 
+                }
+            } catch (err) {
+                console.log("FCM error:", err.message);
             }
-        } catch (error) {
-            const errorMessage = error.response?.data?.message || error.message || "Login failed";
-            toast.error(errorMessage);
+        }, 500);
+
+        // ✅ navigation
+        if (response.user.role === 'admin') {
+            navigate('/admin/dashboard');
+        } else if (response.user.role === 'journalist') {
+            navigate('/journalist/dashboard');
+        } else {
+            navigate('/dashboard');
         }
+
+    } catch (error) {
+        const errorMessage =
+            error.response?.data?.message ||
+            error.message ||
+            "Login failed";
+
+        toast.error(errorMessage);
     }
+};
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-yellow-500 p-4">

@@ -26,10 +26,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    loader: authLoader,
-    hydrateFallbackElement: <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-    </div>
+ 
   },
   {
     path: "/register",
@@ -111,7 +108,7 @@ const initialized = useRef(false);
         const messaging = await getMessagingInstance();
         if (!messaging) return;
 
-        await getFCMToken(messaging);
+      
         listenForMessages(messaging);
 
       } catch (err) {
