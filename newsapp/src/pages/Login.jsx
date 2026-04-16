@@ -22,7 +22,7 @@ const Login = () => {
         try {
             const response = await loginUser(formData);
 
-localStorage.setItem("token", response.token); // 🔥 STORE TOKEN
+localStorage.setItem("token", response.token); 
 dispatch(setUser(response.user));
             toast.success(response.message);
             getFCMToken();
