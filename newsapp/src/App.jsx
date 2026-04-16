@@ -20,13 +20,13 @@ import { listenForMessages } from "./firebaseForeground";
 import { getFCMToken } from "./utils/getFCMToken";
 import { getMessagingInstance } from "./firebase";
 import NotificationSettings from "./pages/NotificationSettings";
-
+//app
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
- 
+
   },
   {
     path: "/register",

@@ -21,7 +21,9 @@ const Login = () => {
 
         try {
             const response = await loginUser(formData);
-            dispatch(setUser(response.user));
+
+localStorage.setItem("token", response.token); // 🔥 STORE TOKEN
+dispatch(setUser(response.user));
             toast.success(response.message);
            await getFCMToken();
             if (response.user.role === 'admin') {
@@ -29,7 +31,8 @@ const Login = () => {
             } else if (response.user.role === 'journalist') {
                 navigate('/journalist/dashboard');
             } else {
-                navigate('/dashboard');
+                console.log("Navigating...");
+navigate('/dashboard');
             }
         } catch (error) {
             const errorMessage = error.response?.data?.message || error.message || "Login failed";
