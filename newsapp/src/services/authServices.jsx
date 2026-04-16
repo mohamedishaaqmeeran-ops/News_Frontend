@@ -12,7 +12,10 @@ export const loginUser = async (credentials) => {
 };
 
 export const getMe = async () => {
-    const response = await protectedInstance.get('/auth/getMe');
+    const token = localStorage.getItem("token");
+    console.log("GETME TOKEN:", token); // 👈 ADD
+
+    const response = await instance.get('/auth/getMe');
     return response.data;
 };
 

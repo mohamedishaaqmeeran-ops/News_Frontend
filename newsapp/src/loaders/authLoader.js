@@ -4,6 +4,12 @@ import store from '../redux/store';
 import { getMe } from '../services/authServices';
 
 const authLoader = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        return redirect('/login');
+    }
+
     try {
         const response = await getMe();
         store.dispatch(setUser(response.user));
@@ -13,6 +19,6 @@ const authLoader = async () => {
         store.dispatch(clearUser());
         return redirect('/login');
     }
-}
+};
 
 export default authLoader;
