@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { clearUser, setUser } from "../redux/authSlice";
 import { logoutUser } from "../services/authServices";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import logo from "../assets/anc.jpeg";
+
 const Navbar = () => {
     const { isAuthenticated, user } = useSelector(state => state.auth);
     const fileInputRef = useRef(null);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,6 +18,7 @@ const Navbar = () => {
     const handleLogout = async () => {
         try {
             await logoutUser();
+            localStorage.removeItem("token"); // 🔥 remove token
             dispatch(clearUser());
             toast.success("Logged out successfully");
             navigate("/login", { replace: true });
@@ -38,16 +41,16 @@ const Navbar = () => {
                 "https://news-backend-17sl.onrender.com/api/v1/auth/upload/profile-picture",
                 {
                     method: "POST",
-                    credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`, // 🔥 FIX
+                    },
                     body: formData,
                 }
             );
 
             const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.message);
-            }
+            if (!response.ok) throw new Error(data.message);
 
             toast.success("Profile picture updated");
             dispatch(setUser(data.user));
@@ -58,51 +61,64 @@ const Navbar = () => {
         }
     };
 
+    // 🔥 Close dropdown on outside click
+    useEffect(() => {
+        const handleClickOutside = () => setDropdownOpen(false);
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
+
     return (
-        <nav className="bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 shadow-[0_0_20px_rgba(147,51,234,0.3)] sticky top-0 z-1000">
+        <nav className="bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 shadow sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
                 <div className="flex justify-between h-16 items-center">
 
+                    {/* LOGO */}
                     <Link
                         to="/"
                         onClick={() => setMenuOpen(false)}
                         className="flex items-center space-x-2"
                     >
-                      <img
-    src={logo}
-    alt="Logo"
-    className="w-10 h-10 object-contain cursor-pointer rounded-lg shadow-md"
-/>
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            className="w-10 h-10 rounded-lg"
+                        />
                         <span className="text-xl font-bold text-purple-950 hidden sm:block">
                             Aura News Center
                         </span>
                     </Link>
 
-                 
+                    {/* DESKTOP MENU */}
                     <div className="hidden sm:flex items-center space-x-6">
 
-                        <Link to="/" className="hover:underline text-purple-950 font-medium">
+                        <Link to="/" className="text-purple-950 font-medium">
                             Home
                         </Link>
 
                         {!isAuthenticated ? (
                             <>
-                                <Link to="/login" className="text-purple-950 font-medium">
+                                <Link to="/login" className="text-purple-950">
                                     Login
                                 </Link>
 
                                 <Link
                                     to="/register"
-                                    className="px-4 py-2 rounded-lg text-white bg-purple-950 hover:bg-purple-800"
+                                    className="px-4 py-2 rounded-lg text-white bg-purple-950"
                                 >
                                     Register
                                 </Link>
                             </>
                         ) : (
-                            <div className="relative group flex items-center space-x-4">
-
-                                <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-purple-50 cursor-pointer">
-
+                            <div
+                                className="relative flex items-center space-x-4"
+                                onClick={(e) => e.stopPropagation()} // 🔥 prevent close
+                            >
+                                {/* PROFILE CLICK */}
+                                <div
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                    className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-purple-50 cursor-pointer"
+                                >
                                     <span className="w-8 h-8 bg-purple-950 text-white rounded-full flex items-center justify-center overflow-hidden">
                                         {user?.profilePicture ? (
                                             <img
@@ -111,61 +127,61 @@ const Navbar = () => {
                                                 className="w-full h-full object-cover"
                                             />
                                         ) : (
-                                            user?.name?.charAt(0).toUpperCase() || "U"
+                                            user?.name?.charAt(0).toUpperCase()
                                         )}
                                     </span>
 
-                                    <div className="flex flex-col leading-tight">
-                                        <span className="font-medium text-purple-950">
-                                            {user?.name || "User"}
-                                        </span>
-                                        <span className="text-xs text-purple-950">
-                                            {user?.role}
-                                        </span>
+                                    <div>
+                                        <p className="text-sm font-medium">{user?.name}</p>
+                                        <p className="text-xs">{user?.role}</p>
                                     </div>
                                 </div>
 
-                                <div className="absolute right-0 top-12 w-48 bg-white border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition z-1000">
+                                {/* DROPDOWN */}
+                                {dropdownOpen && (
+                                    <div className="absolute right-0 top-12 w-48 bg-white border rounded-lg shadow-lg">
 
-                                    <Link
-                                        to={
-                                            user?.role === "admin"
-                                                ? "/admin/dashboard"
-                                                : user?.role === "journalist"
-                                                    ? "/journalist/dashboard"
-                                                    : "/dashboard"
-                                        }
-                                        className="block px-4 py-2 hover:bg-purple-100 cursor-pointer"
-                                    >
-                                        Dashboard
-                                    </Link>
+                                        <Link
+                                            to={
+                                                user?.role === "admin"
+                                                    ? "/admin/dashboard"
+                                                    : user?.role === "journalist"
+                                                        ? "/journalist/dashboard"
+                                                        : "/dashboard"
+                                            }
+                                            onClick={() => setDropdownOpen(false)}
+                                            className="block px-4 py-2 hover:bg-purple-100"
+                                        >
+                                            Dashboard
+                                        </Link>
 
-                                    <button
-                                        onClick={() => fileInputRef.current.click()}
-                                        className="w-full text-left px-4 py-2 hover:bg-purple-100 cursor-pointer"
-                                    >
-                                        Update Profile Picture
-                                    </button>
+                                        <button
+                                            onClick={() => fileInputRef.current.click()}
+                                            className="w-full text-left px-4 py-2 hover:bg-purple-100"
+                                        >
+                                            Update Profile Picture
+                                        </button>
 
-                                    <button
-                                        onClick={handleLogout}
-                                        className="w-full text-left px-4 py-2 hover:bg-purple-100 cursor-pointer"
-                                    >
-                                        Logout
-                                    </button>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full text-left px-4 py-2 hover:bg-purple-100"
+                                        >
+                                            Logout
+                                        </button>
 
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        ref={fileInputRef}
-                                        onChange={handleUpload}
-                                        className="hidden"
-                                    />
-                                </div>
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            onChange={handleUpload}
+                                            className="hidden"
+                                        />
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
 
+                    {/* MOBILE MENU BUTTON */}
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="sm:hidden text-purple-950 text-2xl"
@@ -175,93 +191,23 @@ const Navbar = () => {
                 </div>
             </div>
 
+            {/* MOBILE MENU */}
             {menuOpen && (
-                <div className="sm:hidden bg-yellow-500 px-4 pb-4 space-y-3 shadow-md">
+                <div className="sm:hidden bg-yellow-500 px-4 pb-4 space-y-3">
 
-                    {isAuthenticated && (
-                        <div className="flex items-center space-x-3 px-3 py-2 bg-white rounded-lg mb-3">
-
-                            <span className="w-10 h-10 bg-purple-950 text-white rounded-full flex items-center justify-center overflow-hidden">
-                                {user?.profilePicture ? (
-                                    <img
-                                        src={`https://news-backend-17sl.onrender.com${user.profilePicture}`}
-                                        alt="profile"
-                                        className="w-full h-full object-cover"
-                                    />
-                                ) : (
-                                    user?.name?.charAt(0).toUpperCase() || "U"
-                                )}
-                            </span>
-
-                            <div className="flex flex-col">
-                                <span className="font-medium text-purple-950">
-                                    {user?.name}
-                                </span>
-                                <span className="text-xs text-purple-950">
-                                    {user?.role}
-                                </span>
-                            </div>
-                        </div>
-                    )}
-
-                    <Link
-                        to="/"
-                        onClick={() => setMenuOpen(false)}
-                        className="block text-purple-950"
-                    >
+                    <Link to="/" onClick={() => setMenuOpen(false)}>
                         Home
                     </Link>
 
                     {!isAuthenticated ? (
                         <>
-                            <Link
-                                to="/login"
-                                onClick={() => setMenuOpen(false)}
-                                className="block text-purple-950"
-                            >
-                                Login
-                            </Link>
-
-                            <Link
-                                to="/register"
-                                onClick={() => setMenuOpen(false)}
-                                className="block bg-purple-950 text-white px-3 py-2 rounded"
-                            >
-                                Register
-                            </Link>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register">Register</Link>
                         </>
                     ) : (
                         <>
-                            <Link
-                                to={
-                                    user?.role === "admin"
-                                        ? "/admin/dashboard"
-                                        : user?.role === "journalist"
-                                            ? "/journalist/dashboard"
-                                            : "/dashboard"
-                                }
-                                onClick={() => setMenuOpen(false)}
-                                className="block text-purple-950"
-                            >
-                                Dashboard
-                            </Link>
-
-                            <button
-                                onClick={() => {
-                                    fileInputRef.current.click();
-                                    setMenuOpen(false);
-                                }}
-                                className="block w-full text-left text-purple-950"
-                            >
-                                Update Profile Picture
-                            </button>
-
-                            <button
-                                onClick={handleLogout}
-                                className="block w-full text-left text-purple-950"
-                            >
-                                Logout
-                            </button>
+                            <Link to="/dashboard">Dashboard</Link>
+                            <button onClick={handleLogout}>Logout</button>
                         </>
                     )}
                 </div>
