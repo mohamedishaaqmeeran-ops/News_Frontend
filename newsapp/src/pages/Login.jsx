@@ -30,7 +30,8 @@ dispatch(setUser(response.user));
             } else if (response.user.role === 'journalist') {
                 navigate('/journalist/dashboard');
             } else {
-                navigate('/dashboard');
+                console.log("Navigating...");
+navigate('/dashboard');
             }
         } catch (error) {
             const errorMessage = error.response?.data?.message || error.message || "Login failed";
