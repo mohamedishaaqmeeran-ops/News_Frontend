@@ -25,13 +25,13 @@ const Login = () => {
 localStorage.setItem("token", response.token); // 🔥 STORE TOKEN
 dispatch(setUser(response.user));
             toast.success(response.message);
-           await getFCMToken();
+            getFCMToken();
             if (response.user.role === 'admin') {
                 navigate('/admin/dashboard');
             } else if (response.user.role === 'journalist') {
                 navigate('/journalist/dashboard');
             } else {
-                console.log("Navigating...");
+                
 navigate('/dashboard');
             }
         } catch (error) {

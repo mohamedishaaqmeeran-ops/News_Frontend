@@ -13,7 +13,7 @@ export const loginUser = async (credentials) => {
 
 export const getMe = async () => {
     const token = localStorage.getItem("token");
-    console.log("GETME TOKEN:", token); // 👈 ADD
+    
 
     const response = await instance.get('/auth/getMe');
     return response.data;
