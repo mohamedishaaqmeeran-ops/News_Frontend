@@ -20,7 +20,9 @@ const Login = () => {
 
         try {
             const response = await loginUser(formData);
-            dispatch(setUser(response.user));
+
+localStorage.setItem("token", response.token); // 🔥 STORE TOKEN
+dispatch(setUser(response.user));
             toast.success(response.message);
            await getFCMToken();
             if (response.user.role === 'admin') {
